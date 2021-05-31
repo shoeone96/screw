@@ -8,7 +8,46 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css"/>
         <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
         <style>
+            /* Pen-specific styles */
+            * {
+                box-sizing: border-box;
+                text-align: center;
+                margin: 10px;
+            }
 
+            .main {
+                border: 3px solid black;
+                height: 300px;
+            }
+
+            article {
+              position: absolute;
+              top: 5%;
+              left: 10%;
+              transform: translate(-50%, -50%);
+
+            }
+
+            .container {
+                display: table;
+                width: 100%;
+            }
+
+            .left-half {
+                border: 3px solid black;
+                position: absolute;
+                left: 0px;
+                width: 45%;
+                height: 500px;
+            }
+
+            .right-half {
+                border: 3px solid black;
+                position: absolute;
+                right: 0px;
+                width: 45%;
+                height:500px;
+            }
         </style>
         <script>
             $(document).ready(function () {
@@ -42,9 +81,28 @@
     </head>
     <body>
 
-    <div/>안녕하세요<div>
-    <div/>안녕하세요<div>
+    <div class="container-fluid">
+        <div class="main">
+            <h1>It's a main!</h1>
+        </div>
+        <div class="container">
 
+          <div class="left-half">
+            <article>
+                <h1>left-half</h1>
+            </article>
+          </div>
+
+
+          <div class="right-half">
+            <article>
+                <h1>right-half</h1>
+            </article>
+          </div>
+
+        </div>
+
+    </div>
 
     </body>
 </html>
