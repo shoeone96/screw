@@ -12,6 +12,7 @@
     <style>
         * {
         }
+
         .container-fluid {
             height: 1000px;
         }
@@ -39,6 +40,46 @@
             overflow: scroll;
         }
 
+        .modal_wrap {
+            display: none;
+            width: 500px;
+            height: 600px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin: -250px 0 0 -250px;
+            background: #eee;
+            z-index: 2;
+        }
+
+        .black_bg {
+            display: none;
+            position: absolute;
+            content: "";
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        .modal_close {
+            width: 26px;
+            height: 26px;
+            position: absolute;
+            top: -30px;
+            right: 0;
+        }
+
+        .modal_close > a {
+            display: block;
+            width: 100%;
+            height: 100%;
+            background: url(https://img.icons8.com/metro/26/000000/close-window.png);
+            text-indent: -9999px;
+        }
+
         .buttondiv {
             text-align: center;
         }
@@ -51,19 +92,38 @@
             color: #F26849;
             font-weight: bold;
         }
+        .todobutton {
+            background:none;
+            border:none;
+        }
     </style>
     <script>
         $(document).ready(function () {
-            showStar();
+            showTodo();
+            showDone();
         });
 
-        function showStar() {
+        function showTodo() {
             $.ajax({
                 type: 'GET',
                 url: '/api/list?sample_give=샘플데이터',
                 data: {},
                 success: function (response) {
-                    alert(response['msg']);
+                    // db에서 to-do 리스트 가져오기
+                    // .tod o 에 추가하기
+                    // 일주일 내에 완료해야 하는 일이면 class 이름에 urgent 추가!
+                }
+            });
+        }
+
+        function showDone() {
+            $.ajax({
+                type: 'GET',
+                url: '/api/list?sample_give=샘플데이터',
+                data: {},
+                success: function (response) {
+                    // db에서 done 리스트 가져오기
+                    // .done 에 추가하기
                 }
             });
         }
@@ -79,7 +139,54 @@
             });
         }
 
+        function todoClicked(text){
+            text = text.split(' - ');
+            let date = text[0];
+            let work = text[1];
 
+            let choice = confirm("정말로 완료하셨습니까?");
+
+            if (choice == true) {
+                // date 값이랑 work 값 이용해서 db에서 수정/삭제 하기
+                alert("date: " + date + ", work: " + work + " 완료!")
+                todoDone(work);  // Done 코너로 옮기
+
+                // 요소 삭제 후 리스트 새로고침 필요
+            } else {
+                alert("Canceled");
+            }
+        }
+
+        function todoDone(work) {
+            let today = new Date();
+            let dd = String(today.getDate()).padStart(2, '0');
+            let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+            let yyyy = today.getFullYear();
+
+            today = yyyy + '.' + mm + '.' + dd + ' ' + work
+
+            let temp_html = `<li>${today}</li>`;
+
+            $('.done').append(temp_html);
+        }
+
+
+    window.onload = function () {
+
+        function onClick() {
+            document.querySelector('.modal_wrap').style.display = 'block';
+            document.querySelector('.black_bg').style.display = 'block';
+        }
+
+        function offClick() {
+            document.querySelector('.modal_wrap').style.display = 'none';
+            document.querySelector('.black_bg').style.display = 'none';
+        }
+
+        document.getElementById('modal_btn').addEventListener('click', onClick);
+        document.querySelector('.modal_close').addEventListener('click', offClick);
+
+    };
     </script>
 </head>
 <body>
@@ -90,9 +197,21 @@
         <p>This page is for ...</p>
 
         <div class="buttondiv">
-            <button type="button" class="btn btn-outline-primary submit">등록하기</button>
+            <button type="button" class="btn btn-outline-primary submit" id="modal_btn">등록하기</button>
         </div>
 
+    </div>
+
+    <div class="black_bg"></div>
+    <div class="modal_wrap">
+        <div class="modal_close"><a href="#">close</a></div>
+        <div id="enroll-box" class="form-post" style="dispaly:none">
+            <h3>등록해보자</h3>
+
+            <textarea name="content" cols="40" rows="8">
+
+            </textarea>
+        </div>
     </div>
 
     <div class="row">
@@ -100,46 +219,14 @@
         <div class="col-md-5 left">
             <h1 style="color:#5A86BF; text-align: center;">TO-DO</h1>
             <ul class="todo">
-                <li class="urgent">2021.06.01 study</li>
-                <li>2021.06.01 study</li>
-                <li>2021.06.01 study</li>
-                <li>2021.06.01 study</li>
-                <li>2021.06.01 study</li>
-                <li>2021.06.01 study</li>
-                <li>2021.06.01 study</li>
-                <li>2021.06.01 study</li>
-                <li>2021.06.01 study</li>
-                <li>2021.06.01 study</li>
-                <li>2021.06.01 study</li>
-                <li>2021.06.01 study</li>
-                <li>2021.06.01 study</li>
-                <li>2021.06.01 study</li>
-                <li>2021.06.01 study</li>
-                <li>2021.06.01 study</li>
-                <li>2021.06.01 study</li>
-                <li>2021.06.01 study</li>
-                <li>2021.06.01 study</li>
-                <li>2021.06.01 study</li>
+                <li><button class="todobutton urgent" onclick="todoClicked(this.textContent)"><span class="date">2021.06.01</span> - <span class="work">Study JS</span></button></li>
+                <li><button class="todobutton" onclick="todoClicked(this.textContent)"><span class="date">2021.06.10</span> - <span class="work">Study Python</span></button></li>
             </ul>
         </div>
         <div class="col-md-5 right">
             <h1 style="color:#5A86BF; text-align: center;">DONE</h1>
-            <ul class="todo">
-                <li>2021.06.01 study</li>
-                <li>2021.06.01 study</li>
-                <li>2021.06.01 study</li>
-                <li>2021.06.01 study</li>
-                <li>2021.06.01 study</li>
-                <li>2021.06.01 study</li>
-                <li>2021.06.01 study</li>
-                <li>2021.06.01 study</li>
-                <li>2021.06.01 study</li>
-                <li>2021.06.01 study</li>
-                <li>2021.06.01 study</li>
-                <li>2021.06.01 study</li>
-                <li>2021.06.01 study</li>
-                <li>2021.06.01 study</li>
-                <li>2021.06.01 study</li>
+            <ul class="done">
+
             </ul>
         </div>
         <div class="col-md-1"></div>
