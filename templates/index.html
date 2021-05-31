@@ -1,108 +1,150 @@
 <!DOCTYPE html>
 <html lang="ko">
-    <head>
-        <meta charset="UTF-8"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <title>SCREW</title>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css"/>
-        <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
-        <style>
-            /* Pen-specific styles */
-            * {
-                box-sizing: border-box;
-                text-align: center;
-                margin: 10px;
-            }
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>SCREW</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css"/>
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <style>
+        * {
+        }
+        .container-fluid {
+            height: 1000px;
+        }
+        .main {
+            margin-top: 10px;
+            border: 3px solid #F28F80;
+            border-radius: 15px;
+            padding: 10px;
+            height: 300px;
+        }
+        .left {
+            margin-top: 10px;
+            border: 3px solid #C3D9B8;
+            border-radius: 15px;
+            padding: 10px;
+            height: 500px;
+            overflow: scroll;
+        }
+        .right {
+            margin-top: 10px;
+            border: 3px solid #C3D9B8;
+            border-radius: 15px;
+            padding: 10px;
+            height: 500px;
+            overflow: scroll;
+        }
 
-            .main {
-                border: 3px solid black;
-                height: 300px;
-            }
+        .buttondiv {
+            text-align: center;
+        }
+        .submit {
+            border-color: #5A86BF;
+            color: #5A86BF;
+        }
 
-            article {
-              position: absolute;
-              top: 5%;
-              left: 10%;
-              transform: translate(-50%, -50%);
+        .urgent {
+            color: #F26849;
+            font-weight: bold;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            showStar();
+        });
 
-            }
-
-            .container {
-                display: table;
-                width: 100%;
-            }
-
-            .left-half {
-                border: 3px solid black;
-                position: absolute;
-                left: 0px;
-                width: 45%;
-                height: 500px;
-            }
-
-            .right-half {
-                border: 3px solid black;
-                position: absolute;
-                right: 0px;
-                width: 45%;
-                height:500px;
-            }
-        </style>
-        <script>
-            $(document).ready(function () {
-                showStar();
+        function showStar() {
+            $.ajax({
+                type: 'GET',
+                url: '/api/list?sample_give=샘플데이터',
+                data: {},
+                success: function (response) {
+                    alert(response['msg']);
+                }
             });
+        }
 
-            function showStar() {
-                $.ajax({
-                    type: 'GET',
-                    url: '/api/list?sample_give=샘플데이터',
-                    data: {},
-                    success: function (response) {
-                        alert(response['msg']);
-                    }
-                });
-            }
-
-            function likeStar(name) {
-                $.ajax({
-                    type: 'POST',
-                    url: '/api/like',
-                    data: {sample_give:'샘플데이터'},
-                    success: function (response) {
-                        alert(response['msg']);
-                    }
-                });
-            }
+        function likeStar(name) {
+            $.ajax({
+                type: 'POST',
+                url: '/api/like',
+                data: {sample_give: '샘플데이터'},
+                success: function (response) {
+                    alert(response['msg']);
+                }
+            });
+        }
 
 
-        </script>
-    </head>
-    <body>
+    </script>
+</head>
+<body>
 
-    <div class="container-fluid">
-        <div class="main">
-            <h1>It's a main!</h1>
-        </div>
-        <div class="container">
+<div class="container-fluid">
+    <div class="main">
+        <h1 style="color:#F26849; text-align: center;">SCREW</h1>
+        <p>This page is for ...</p>
 
-          <div class="left-half">
-            <article>
-                <h1>left-half</h1>
-            </article>
-          </div>
-
-
-          <div class="right-half">
-            <article>
-                <h1>right-half</h1>
-            </article>
-          </div>
-
+        <div class="buttondiv">
+            <button type="button" class="btn btn-outline-primary submit">등록하기</button>
         </div>
 
     </div>
 
-    </body>
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-5 left">
+            <h1 style="color:#5A86BF; text-align: center;">TO-DO</h1>
+            <ul class="todo">
+                <li class="urgent">2021.06.01 study</li>
+                <li>2021.06.01 study</li>
+                <li>2021.06.01 study</li>
+                <li>2021.06.01 study</li>
+                <li>2021.06.01 study</li>
+                <li>2021.06.01 study</li>
+                <li>2021.06.01 study</li>
+                <li>2021.06.01 study</li>
+                <li>2021.06.01 study</li>
+                <li>2021.06.01 study</li>
+                <li>2021.06.01 study</li>
+                <li>2021.06.01 study</li>
+                <li>2021.06.01 study</li>
+                <li>2021.06.01 study</li>
+                <li>2021.06.01 study</li>
+                <li>2021.06.01 study</li>
+                <li>2021.06.01 study</li>
+                <li>2021.06.01 study</li>
+                <li>2021.06.01 study</li>
+                <li>2021.06.01 study</li>
+            </ul>
+        </div>
+        <div class="col-md-5 right">
+            <h1 style="color:#5A86BF; text-align: center;">DONE</h1>
+            <ul class="todo">
+                <li>2021.06.01 study</li>
+                <li>2021.06.01 study</li>
+                <li>2021.06.01 study</li>
+                <li>2021.06.01 study</li>
+                <li>2021.06.01 study</li>
+                <li>2021.06.01 study</li>
+                <li>2021.06.01 study</li>
+                <li>2021.06.01 study</li>
+                <li>2021.06.01 study</li>
+                <li>2021.06.01 study</li>
+                <li>2021.06.01 study</li>
+                <li>2021.06.01 study</li>
+                <li>2021.06.01 study</li>
+                <li>2021.06.01 study</li>
+                <li>2021.06.01 study</li>
+            </ul>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+</div>
+
+</body>
 </html>
