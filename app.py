@@ -8,7 +8,7 @@ client = MongoClient('localhost', 27017)
 db = client.dbsparta
 
 
-# HTML 화면 보여주기
+# HTML 화면
 @app.route('/')
 def home():
     return render_template('index.html')
@@ -16,17 +16,17 @@ def home():
 
 # API 역할을 하는 부분
 @app.route('/api/list', methods=['GET'])
-def show_stars():
+def GET_function():
     sample_receive = request.args.get('sample_give')
     print(sample_receive)
-    return jsonify({'msg': 'list 연결되었습니다!'})
+    return jsonify({'msg': 'GET 연결되었습니다!'})
 
 
 @app.route('/api/like', methods=['POST'])
-def like_star():
+def POST_function():
     sample_receive = request.form['sample_give']
     print(sample_receive)
-    return jsonify({'msg': 'like 연결되었습니다!'})
+    return jsonify({'msg': 'POST 연결되었습니다!'})
 
 
 if __name__ == '__main__':
